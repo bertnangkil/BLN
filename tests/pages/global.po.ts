@@ -8,24 +8,7 @@ export default class Global {
      
     }
     //Global Locators
-    
-    trashBinIcon(){
-      return this.page.locator("[data-testid='deleteIcon']");
-    }
-    //ACTIONS
-
-      async openDropdown(){
-        await this.page.getByLabel('Open', { exact: true }).click();
-      }
-      async goToMenu(menu: Locator){
-        await (menu).click();
-      }
-      async clickBtn(button: Locator){
-        await (button).click();
-      }
-      async fillTxtBox(field: Locator, value: string){
-        await (field).fill(value);
-      }     
+       
       addBtn(){
         return this.page.getByLabel('add');
       }
@@ -50,5 +33,20 @@ export default class Global {
       selectUserAlbert(){
         return this.page.locator('li').filter({ hasText: 'Albert QA Testing' }).getByLabel('delete');
       }
+
+    //ACTIONS
+
+    async openDropdown(){
+      await this.page.getByLabel('Open', { exact: true }).click();
+    }
+    async goToMenu(menu: Locator){
+      await (menu).click();
+    }
+    async clickBtn(button: Locator){
+      await (button).click();
+    }
+    async fillTxtBox(field: Locator, value: string){
+      await (field).fill(value);
+    } 
       
 }
