@@ -243,3 +243,8 @@ import { expect } from "@playwright/test";
     await global.clickBtn(global.selectUserAlbert());
     await candidates.assertAssignUserSuccessMsg(global.alertmsg());
   });
+  test('should be able to NOT show any search results in Grid view', async ({ global, login, candidates, }) => {
+    await login.Auth();
+    await global.fillTxtBox(candidates.boardSearchBox(), candidate.zipcode);
+    await global.assertNoSearchResultFound(candidates.boardSearchResult());
+  });

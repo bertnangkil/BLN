@@ -13,7 +13,7 @@ import _default, { users } from '../../config/default';
     loginBtn(){
       return (this.page.getByText('Login'));
     }
-        emailInputField() {
+    emailInputField() {
       return this.page.getByLabel('Email address');
     }
     passwordlInputField() {

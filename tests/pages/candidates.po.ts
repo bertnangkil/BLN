@@ -10,8 +10,11 @@ export default class Candidates {
       global = global;
     }
     //Locators 
+    candidatesMenu(){
+      return this.page.getByRole('button', { name: 'Candidates' });
+    }
     //Create Candidate
-  
+    
     //Step 1 Fields
     //position values
     selectadvancePosition(){
@@ -154,6 +157,12 @@ export default class Candidates {
     filterIcon(){
       return this.page.locator("[data-testid='FilterListIcon']");
     }
+    boardSearchResult(){
+      return this. page.locator("//p[text()='No results found...']");
+    }
+    boardSearchBox(){
+      return this.page.locator("(//input[@placeholder='Search'])[1]");
+    }
     
     
     //Grid view
@@ -169,6 +178,7 @@ export default class Candidates {
     continueRemoveBtn(){
       return this.page.getByRole('button', { name: 'Continue' });
     }
+    
     
     //List view
     firstCandidate(){

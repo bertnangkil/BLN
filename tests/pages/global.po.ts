@@ -1,4 +1,6 @@
-import { Locator, Page, } from "@playwright/test";
+import { Locator, Page, expect} from "@playwright/test";
+import { link } from "fs";
+import { request } from "http";
 
 export default class Global {
     page: Page;
@@ -8,6 +10,18 @@ export default class Global {
      
     }
     //Global Locators
+    async assertCandidatesPageURL(){
+      await expect(this.page).toHaveURL(/.*candidates/);
+    }
+    async assertCalendarPageURL(){
+      await expect(this.page).toHaveURL(/.*calendar/);
+    }
+    async assertPositionsPageURL(){
+      await expect(this.page).toHaveURL(/.*positions/);
+    }
+    async assertUsersPageURL(){
+      await expect(this.page).toHaveURL(/.*users/);
+    }
        
       addBtn(){
         return this.page.getByLabel('add');
@@ -48,5 +62,21 @@ export default class Global {
     async fillTxtBox(field: Locator, value: string){
       await (field).fill(value);
     } 
+    async assertNoSearchResultFound(field: Locator){
+      await expect(field).toHaveText('No results found...');
+    }
       
+    async consoleerror(){
+      this.page.on('console', msg => {
+        if (msg.text() === 'error')
+          console.log(`Error text: "${msg.text()}"`);
+      });
+    }
+    
+     async checkURLs(){
+       this.page.on('response', request => {
+        expect (request.status()).toEqual(200);
+      });
+    }
+
 }

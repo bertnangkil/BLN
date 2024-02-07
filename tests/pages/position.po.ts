@@ -1,5 +1,4 @@
-import { expect, Page } from '@playwright/test';
-import _default, { users } from '../../config/default';
+import { Page } from '@playwright/test';
   
   export default class Position {
     page: Page;
@@ -45,3 +44,7 @@ import _default, { users } from '../../config/default';
     }
     
 }
+function expect(arg0: any) {
+  throw new Error('Function not implemented.');
+}
+
