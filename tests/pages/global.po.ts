@@ -32,6 +32,9 @@ export default class Global {
       deleteTrashIcon(){
         return this.page.locator("[data-testid='DeleteIcon']");
       }
+      seconddeleteTrashIcon(){
+        return this.page.locator("[data-testid='DeleteIcon']").nth(2);
+      }
       pencilEditIcon(){
         return this.page.locator("[data-testid='EditIcon']");
       }
@@ -47,6 +50,9 @@ export default class Global {
       selectUserAlbert(){
         return this.page.locator('li').filter({ hasText: 'Albert QA Testing' }).getByLabel('delete');
       }
+      continueRemoveBtn(){
+        return this.page.getByRole('button', { name: 'Continue' });
+      }
 
     //ACTIONS
 
@@ -59,7 +65,7 @@ export default class Global {
     async clickBtn(button: Locator){
       await (button).click();
     }
-    async fillTxtBox(field: Locator, value: string){
+    async fillTxtBox(field: Locator, value: any){
       await (field).fill(value);
     } 
     async assertNoSearchResultFound(field: Locator){

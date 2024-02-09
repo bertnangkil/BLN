@@ -26,9 +26,13 @@ module.exports = {
       }
     },
     candidate: {
+      //create candidate
       firstName: 'Albert',
       middleName: 'Reggie',
       lastName: 'Miller',
+      //edit candidate
+      firstName2: 'Michael',
+      lastName2: 'Dill',
       number: '8019216059',
       email: 'newemail@gmail.com',
       address: 'My street',
