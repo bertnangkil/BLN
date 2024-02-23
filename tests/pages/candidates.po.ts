@@ -1,8 +1,6 @@
 import { expect, Locator, Page } from "@playwright/test";
 import Global from "./global.po";
-import exp from "constants";
-import { candidate } from "../../config/default";
-import { waitForDebugger } from "inspector";
+
 
 export default class Candidates {
     page: Page;
