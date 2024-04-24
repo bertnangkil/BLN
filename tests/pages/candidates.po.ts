@@ -1,5 +1,6 @@
-import { expect, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import Global from "./global.po";
+
 
 export default class Candidates {
     page: Page;
@@ -10,8 +11,11 @@ export default class Candidates {
       global = global;
     }
     //Locators 
+    candidatesMenu(){
+      return this.page.getByRole('button', { name: 'Candidates' });
+    }
     //Create Candidate
-  
+    
     //Step 1 Fields
     //position values
     selectadvancePosition(){
@@ -69,10 +73,10 @@ export default class Candidates {
       return this.page.getByRole('option', { name: 'Linked in' });
     }
     urlInputTxtBox(){
-      return this.page.getByPlaceholder('The absolute url of the link (include the domain.com)');
+      return this.page.locator("(//input[contains(@class,'MuiInputBase-input MuiFilledInput-input')])[2]");
     }
     addLinkBtn(){
-      return this.page.getByRole('button', { name: 'Add Link' });
+      return this.page.locator("//button[text()='Add Link']");
     }
 
     //Step 3 Fields
@@ -85,6 +89,15 @@ export default class Candidates {
     issuedByTxtBox(){
       return this.page.getByPlaceholder('Who issued the license, i.e. \'New York\'');
     }
+    secondlicenseNumberTxtBox(){
+      return this.page.getByPlaceholder('The number or ID of the license').nth(1);
+    }
+    secondlicenseName(){
+      return this.page.getByPlaceholder('The name of the kind of license, i.e. \'Drivers License\'').nth(1);
+    }
+    secondissuedByTxtBox(){
+      return this.page.getByPlaceholder('Who issued the license, i.e. \'New York\'').nth(1);
+    }
     licenseTypeOption(){
       return this.page.getByRole('option', { name: 'License' });
     }
@@ -92,7 +105,7 @@ export default class Candidates {
       return this.page.getByRole('option', { name: 'Certification' });
     }
     addLicenseBtn(){
-      return this.page.getByRole('button', { name: 'Add License' });
+      return this.page.locator("//button[text()='Add License']");
     }
 
     //Step 4 Fields
@@ -142,21 +155,30 @@ export default class Candidates {
     editBoardBtn(){
       return this.page.getByRole('button', { name: 'Edit Board' });
     }
-    gridViewIcon(){
-      return this.page.locator("[data-testid='WindowIcon']");
-    }
     boardViewIcon(){
       return this.page.locator("[data-testid='ViewColumnIcon']");
-    }
-    listViewIcon(){
-      return this.page.locator("[data-testid='ListIcon']");
     }
     filterIcon(){
       return this.page.locator("[data-testid='FilterListIcon']");
     }
+    searchResults(){
+      return this. page.locator("//p[text()='No results found...']");
+    }
+    boardSearchBox(){
+      return this.page.locator("(//input[@placeholder='Search'])[1]");
+    }
+    boardColumnHeaders(){
+      return this.page.locator("(//p[contains(@class,'MuiTypography-root MuiTypography-body1')])");
+    }
+    boardCandidateSearchList(){
+      return this.page.locator("(//span[@class='css-1jxnmfo e58dww40'])");
+    }
     
     
     //Grid view
+    gridViewIcon(){
+      return this.page.locator("[data-testid='WindowIcon']");
+    }
     firstCandidateMessageBtn(){
       return this.page.locator("(//button[text()='Message'])[1]");
     }
@@ -166,11 +188,19 @@ export default class Candidates {
     firstCandidateRemoveBtn(){
       return this.page.locator("(//button[text()='Remove'])[1]");
     }
-    continueRemoveBtn(){
-      return this.page.getByRole('button', { name: 'Continue' });
+    
+    searchBox(){
+      return this.page.locator("input[placeholder='Search for candidates...']");
+    }
+    gridCandidateSearchList(){
+      return this.page.locator("//div[contains(@class,'MuiTypography-root MuiTypography-h5')]");
     }
     
+    
     //List view
+    listViewIcon(){
+      return this.page.locator("[data-testid='ListIcon']");
+    }
     firstCandidate(){
       return this.page.locator('tr:nth-child(1) td:nth-child(2) a');
     }
@@ -182,10 +212,26 @@ export default class Candidates {
     }
     candidatePositionClearSearchBtn(){
       return this.page.getByLabel('Clear');
+    }listCandidateSearchList(){
+      return this.page.locator("//a[contains(@class,'MuiTypography-root MuiTypography-inherit')]");
     }
-    
+       
     // Candidate Detail view
-    
+    // addlicenselink(){
+    //   locator('.MuiGrid-grid-xl-3.css-1noz1rq button:nth-child(3)')
+    // }
+    editLicenseLink(){
+      return this.page.locator("//button[text()='Edit Licenses']");
+    }
+    editProfileLink(){
+      return this.page.locator("//button[text()='Edit Links']");
+    }
+    editWorkLink(){
+      return this.page.locator("//button[text()='Edit Work History']");
+    }
+    editEducationLink(){
+      return this.page.locator("//button[text()='Edit Education History']");
+    }
     
                 
     //Pagination
@@ -223,13 +269,19 @@ export default class Candidates {
     async assertCandidatesPageURL(){
       await expect(this.page).toHaveURL(/.*candidates/);
     }
-    async assertCreateCandidateSuccessMsg(locator) {
+    async assertCreateCandidateSuccessMsg(locator: any) {
       await expect (locator).toHaveText("successCandidate’s profile has been created");
     }
-    async assertRemoveCandidateSuccessMsg(locator){
+    async assertUpdateCandidateSuccessMsg(locator: any) {
+      await expect (locator).toHaveText("successThe candidate’s profile has been updated");
+    }
+    async assertRemoveCandidateSuccessMsg(locator:any) {
       await expect (locator).toHaveText("infoCandidate successfully deleted.");
     } 
-    async assertAssignUserSuccessMsg(locator){
-      await expect (locator).toHaveText("infoYour changes have been saved.");
+    async assertAssignUserSuccessMsg(field: Locator){
+      await expect (field).toHaveText("infoYour changes have been saved.");
+    } 
+    async assertCandidateSearchResult(candidate: string, field: Locator){
+      await expect (field).toContainText(candidate);
     } 
 }
